@@ -5,12 +5,8 @@ function Get-SPMTUnsupportedLists {
         [string]$SiteUrl
     )
 
-    $knownBadPatterns = @(
-        "Quick Deploy",
-        "Notification",
-        "Device Channel",
-        "Relationships List"
-    )
+    # Load KnownBadLists hashtable from data file
+    . "$PSScriptRoot\..\KnownBadLists.ps1"
 
     $problemLists = @()
 
@@ -19,7 +15,7 @@ function Get-SPMTUnsupportedLists {
 
         function Find-ProblemLists([Microsoft.SharePoint.SPWeb]$Web) {
             foreach ($list in $Web.Lists) {
-                if ($list.Hidden -and $list.Title -match ($knownBadPatterns -join "|")) {
+                if ($list.Hidden -and $KnownBadLists.ContainsKey($list.Title)) {
                     $problemLists += $list
                 }
             }
