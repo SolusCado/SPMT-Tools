@@ -1,18 +1,23 @@
 function Remove-SPMTUnsupportedList {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param (
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
-        [Microsoft.SharePoint.SPList]$List
+        [Parameter(Mandatory = $true)]
+        [Microsoft.SharePoint.SPList]$List,
+
+        [switch]$Force
     )
 
-    process {
+    $title = $List.Title
+    $url = $List.ParentWeb.Url + "/" + $List.RootFolder.Url
+
+    if ($Force -or $PSCmdlet.ShouldProcess($title, "Delete unsupported list")) {
         try {
             $List.AllowDeletion = $true
             $List.Update()
             $List.Delete()
-            Write-Host "✅ Deleted list: $($List.Title)" -ForegroundColor Green
+            Write-Host "Deleted list: $title" -ForegroundColor Green
         } catch {
-            Write-Host "❌ Could not delete $($List.Title): $($_.Exception.Message)" -ForegroundColor Red
+            Write-Warning "Force delete failed for [$title] at [$url]: $($_.Exception.Message)"
         }
     }
 }

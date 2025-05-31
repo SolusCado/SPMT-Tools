@@ -1,6 +1,6 @@
 @{
     RootModule        = 'BaileyPoint.SPMT.Tools.psm1'
-    ModuleVersion     = '1.0.0'
+    ModuleVersion     = '1.1.0'
     GUID              = 'd1a2b73f-c4fa-42cf-b3e1-92c0aa3fa9df'
     Author            = 'Michael Bailey'
     CompanyName       = 'BaileyPoint'
