@@ -6,7 +6,8 @@ Get-ChildItem -Path $PSScriptRoot\Public\*.ps1  | ForEach-Object { . $_.FullName
 
 # Only export intended public functions
 Export-ModuleMember -Function @(
-    'Invoke-SPMTListCleanup',
-    'Get-SPMTUnsupportedLists',
+    'Invoke-SPMTListCleanup', 
+    'Get-SPMTUnsupportedLists', 
+    'Get-SPMTHiddenLists', 
     'Remove-SPMTUnsupportedList'
 )
